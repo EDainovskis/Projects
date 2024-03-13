@@ -29,6 +29,11 @@ public class Main {
         emailInput.sendKeys("test@gmail.com");
 
         loginButton.click();
+
+        String currentUrl = driver.getCurrentUrl();
+
+
+        assertEquals("expected_url_after_login", currentUrl, "successfully logged in");
     }
     @Test
     void testRegister() {
