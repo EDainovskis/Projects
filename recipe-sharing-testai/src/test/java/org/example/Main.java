@@ -38,6 +38,25 @@ public class Main {
 
         assertEquals("http://localhost:5173/login-successful", currentUrl, "successfully logged in");
     }
+
+    @Test
+    void testFalseLogin() throws InterruptedException {
+        WebElement loginButton = driver.findElement(By.cssSelector("form > .btn.btn-primary"));
+
+        WebElement passwordInput = driver.findElement(By.cssSelector("input#passwordInput"));
+        passwordInput.sendKeys("Passw");
+        WebElement emailInput = driver.findElement(By.cssSelector("input#email"));
+        emailInput.sendKeys("tesgmail.com");
+
+        loginButton.click();
+        TimeUnit.SECONDS.sleep(2);
+
+
+        String currentUrl = driver.getCurrentUrl();
+
+
+        assertEquals("http://localhost:5173/login", currentUrl, "loggin failed");
+    }
     @Test
     void testRegister() {
         WebElement specialLink = driver.findElement(By.cssSelector(".special-link"));
