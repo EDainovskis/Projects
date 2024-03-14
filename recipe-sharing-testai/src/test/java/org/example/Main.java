@@ -1,4 +1,5 @@
 package org.example;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -7,7 +8,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.AfterEach;
+
+import java.time.Duration;
+import java.time.Instant;
 import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class Main {
     private WebDriver driver;
@@ -63,7 +71,7 @@ public class Main {
         specialLink.click();
 
         WebElement email = driver.findElement(By.cssSelector("input#email"));
-        email.sendKeys("test@gmail.com");
+        email.sendKeys("tesasddddt@gasmail.com");
 
         WebElement password = driver.findElement(By.cssSelector("input#password"));
         password.sendKeys("Password1!");
@@ -72,13 +80,13 @@ public class Main {
         passwordR.sendKeys("Password1!");
 
         WebElement displayName = driver.findElement(By.cssSelector("input#displayName"));
-        displayName.sendKeys("Nikas");
+        displayName.sendKeys("Nikasaasddas");
 
         WebElement firstName = driver.findElement(By.cssSelector("input#firstName"));
         firstName.sendKeys("Giedrius");
 
         WebElement lastName = driver.findElement(By.cssSelector("input#lastName"));
-        lastName.sendKeys("Gied");
+        lastName.sendKeys("Giedas");
 
         WebElement selectGender = driver.findElement(By.cssSelector(" select#gender"));
         selectGender.click();
@@ -88,6 +96,12 @@ public class Main {
 
         WebElement submit = driver.findElement(By.cssSelector(".btn.btn-primary"));
         submit.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        String expected = "Registration Successful!";
+
+        WebElement actual = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("exampleModalCenterTitle")));
+        String actualFinall = actual.getText();
+        Assertions.assertEquals(expected, actualFinall);
 
 
     }
