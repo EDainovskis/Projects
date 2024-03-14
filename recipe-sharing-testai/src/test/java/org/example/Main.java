@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.AfterEach;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     private WebDriver driver;
@@ -20,20 +21,22 @@ public class Main {
     }
 
     @Test
-    void testLogin() {
-        WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']"));
+    void testLogin() throws InterruptedException {
+        WebElement loginButton = driver.findElement(By.cssSelector("form > .btn.btn-primary"));
 
-        WebElement passwordInput = driver.findElement(By.cssSelector("#password"));
-        passwordInput.sendKeys("password");
-        WebElement emailInput = driver.findElement(By.cssSelector("#email"));
+        WebElement passwordInput = driver.findElement(By.cssSelector("input#passwordInput"));
+        passwordInput.sendKeys("Password1!");
+        WebElement emailInput = driver.findElement(By.cssSelector("input#email"));
         emailInput.sendKeys("test@gmail.com");
 
         loginButton.click();
+        TimeUnit.SECONDS.sleep(2);
+
 
         String currentUrl = driver.getCurrentUrl();
 
 
-        assertEquals("expected_url_after_login", currentUrl, "successfully logged in");
+        assertEquals("http://localhost:5173/login-successful", currentUrl, "successfully logged in");
     }
     @Test
     void testRegister() {
@@ -110,10 +113,27 @@ public class Main {
         assertEquals(expectedErrorMessage, actualErrorMessage);
     }
 
+    @Test
+    void testBadWords() {
+        WebElement specialLink = driver.findElement(By.cssSelector(".special-link"));
+        specialLink.click();
+
+        WebElement displayName = driver.findElement(By.cssSelector("input#displayName"));
+        displayName.sendKeys("Dick");
+
+        WebElement submit = driver.findElement(By.cssSelector(".btn.btn-primary"));
+        submit.click();
+
+        WebElement errorMessage= driver.findElement(By.cssSelector("div:nth-of-type(4) > .invalid-feedback"));
+        String actualErrorMessage = errorMessage.getText();
+
+        String expectedErrorMessage = "Display name contains offensive words!";
+        assertEquals(expectedErrorMessage, actualErrorMessage);
+
 //    @AfterEach
 //    void tearDown() {
 //        if (driver != null) {
 //            driver.quit();
 //        }
     }
-//}
+}
