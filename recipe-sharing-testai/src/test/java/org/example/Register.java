@@ -7,21 +7,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.AfterEach;
 
 import java.time.Duration;
-import java.time.Instant;
-import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.Alert;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class Main {
+public class Register {
     private WebDriver driver;
 
     @BeforeEach
-    void setUp() {
+    void SetUp() {
 
         driver = new ChromeDriver();
         driver.get("http://localhost:5173/login");
@@ -31,12 +27,12 @@ public class Main {
 
 
     @Test
-    void testRegister() {
+    void TestRegister() {
         WebElement specialLink = driver.findElement(By.cssSelector(".special-link"));
         specialLink.click();
 
         WebElement email = driver.findElement(By.cssSelector("input#email"));
-        email.sendKeys("tesasddddt@gasmail.com");
+        email.sendKeys("test@gmail.com");
 
         WebElement password = driver.findElement(By.cssSelector("input#password"));
         password.sendKeys("Password1!");
@@ -72,7 +68,7 @@ public class Main {
     }
 
     @Test
-    void testFalseRegister() {
+    void TestFalseRegister() {
         WebElement specialLink = driver.findElement(By.cssSelector(".special-link"));
         specialLink.click();
 
@@ -112,7 +108,7 @@ public class Main {
     }
 
     @Test
-    void testBadWordsRegister() {
+    void TestBadWordsRegister() {
         WebElement specialLink = driver.findElement(By.cssSelector(".special-link"));
         specialLink.click();
 

@@ -11,12 +11,12 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class login {
+public class Login {
 
     private WebDriver driver;
 
     @BeforeEach
-    void setUp() {
+    void SetUp() {
 
         driver = new ChromeDriver();
         driver.get("http://localhost:5173/login");
@@ -25,7 +25,7 @@ public class login {
 
 
     @Test
-    void testLogin() throws InterruptedException {
+    void TestLogin() throws InterruptedException {
         WebElement loginButton = driver.findElement(By.cssSelector("form > .btn.btn-primary"));
 
         WebElement passwordInput = driver.findElement(By.cssSelector("input#password"));
@@ -44,7 +44,7 @@ public class login {
     }
 
     @Test
-    void testFalseLogin() throws InterruptedException {
+    void TestFalseLogin() throws InterruptedException {
         WebElement loginButton = driver.findElement(By.cssSelector("form > .btn.btn-primary"));
 
         WebElement passwordInput = driver.findElement(By.cssSelector("input#password"));
@@ -61,4 +61,31 @@ public class login {
 
         assertEquals("http://localhost:5173/login", currentUrl, "loggin failed");
     }
+    @Test
+    void TestLogout() throws InterruptedException {
+        WebElement loginButton = driver.findElement(By.cssSelector("form > .btn.btn-primary"));
+
+        WebElement passwordInput = driver.findElement(By.cssSelector("input#password"));
+        passwordInput.sendKeys("Password1!");
+        WebElement emailInput = driver.findElement(By.cssSelector("#email"));
+        emailInput.sendKeys("test@gmail.com");
+
+        loginButton.click();
+        TimeUnit.SECONDS.sleep(2);
+
+        WebElement logoutButton = driver.findElement(By.cssSelector("li:nth-of-type(3) > .nav-link"));
+        logoutButton.click();
+
+
+
+
+        TimeUnit.SECONDS.sleep(2);
+
+
+        String currentUrl = driver.getCurrentUrl();
+
+
+        assertEquals("http://localhost:5173/", currentUrl, "logout is successful");
+    }
+
 }
